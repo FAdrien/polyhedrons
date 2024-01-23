@@ -8,8 +8,17 @@ function main() {
       * ------------------------------------------------------------
       * 
       */
-
-
+     //objet à visualiser
+     var objet3D = construireObjet(johnson["20"]); //solides de johnson de "1" à "92"
+                 //construireObjet(dualunif["20"]); //duaux des polyèdres uniformes  de "1" à "80"
+                 //construireObjet(uniform["20"]); //polyèdres uniformes  de "1" à "81"
+                 //construireObjet(stcuboctaedre["10"]); //stellations du cuboctaèdre de "1" à "17"
+                 //construireObjet(stdodecaedreRhb["1"]); //stellations du dodécaèdre rhombique de "1" à "3"
+                 //construireObjet(sticosaedre["1"]); //stellations de l'icosaèdre de "1" à "58"
+                 //construireObjet(sttriacontaedreRhb["1"]); //stellations du triacontaèdre rhombique de "1" à "226"
+                 //construireObjet(zonoedre["1"]); //exemples de zonoèdres de "1" à "5"
+     scene.add(objet3D);
+          
      function construireObjet(objetDic) {
           /**
            * 
@@ -37,7 +46,7 @@ function main() {
                     var L = faces[k];
                     var couleur = faceColor[L.length];   // Couleur en fonction de la face.
                     if (faceOpacity[L.length] == undefined) {
-                         faceOpacity[L.length] = 0.5;
+                         faceOpacity[L.length] = 0.8; //0.5;
                     };
                     if (facesColor[L.length] == undefined) {
                          facesColor[L.length] = couleur;
@@ -88,7 +97,9 @@ function main() {
                          color: sommetColor,
                          emissive: 'black',
                          transparent: sommetOpacity != 1, 
-                         opacity: sommetOpacity
+                         opacity: sommetOpacity,
+                         metalness: 1,
+                         roughness: 0.5,
                     });
                     var sommet = new THREE.Mesh(new THREE.SphereBufferGeometry(0.02, 50, 50), materialSommet);
                     sommet.position.set(sommets[i][0], sommets[i][1], sommets[i][2]);
@@ -103,6 +114,8 @@ function main() {
                     var materialLine = new THREE.MeshPhongMaterial({
                          color: areteColor,
                          emissive: 'black',
+                         specular : "white",
+                         shininess : 10,
                          transparent: areteOpacity != 1,
                          opacity: areteOpacity,
                          flatShading : false
@@ -291,9 +304,6 @@ function main() {
                controls.update();
           };
      };
-
-     var objet3D = construireObjet(regularPolygonsMeshes["7"]);
-     scene.add(objet3D);
 
      var grid = new THREE.GridHelper(20, 20);
      scene.add(grid);
